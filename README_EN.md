@@ -1,70 +1,56 @@
-# AgileX Robotic Arm URDF Models
+# my_robot_description
 
 [中文](./README.md)
 
-This repository contains URDF / Xacro model files and 3D mesh resources for AgileX series robotic arms, used for ROS2 visualization, simulation, and motion planning.
+This repository is `chenzixin-zn/my_robot_description`, the robot description package used by this workspace. The ROS 2 package name remains `agx_arm_description` so existing launch files, URDF references, RViz configs, and package dependencies stay compatible.
 
-> This repository is used as a submodule of [agx_arm_ros](https://github.com/agilexrobotics/agx_arm_ros). For complete ROS2 driver, launch, and control instructions, please refer to the main repository.
+The main branch currently keeps only the AgileX Nero baseline. Piper, Piper H, Piper L, Piper X, and standalone Revo2 hand models are no longer kept on this branch.
 
----
+## Remotes
 
-## Supported Models
+- `origin`: `https://github.com/chenzixin-zn/my_robot_description.git`
+- `upstream`: `https://github.com/agilexrobotics/agx_arm_urdf.git`
 
-| Model | Directory | Base URDF | Gripper Xacro | Dexterous Hand Xacro |
-|-------|-----------|-----------|---------------|----------------------|
-| Piper | `piper/` | `piper_description.urdf` | `piper_with_gripper_description.xacro` | `piper_with_left_revo2_description.xacro` / `piper_with_right_revo2_description.xacro` |
-| Piper H | `piper_h/` | `piper_h_description.urdf` | `piper_h_with_gripper_description.xacro` | `piper_h_with_left_revo2_description.xacro` / `piper_h_with_right_revo2_description.xacro` |
-| Piper L | `piper_l/` | `piper_l_description.urdf` | `piper_l_with_gripper_description.xacro` | `piper_l_with_left_revo2_description.xacro` / `piper_l_with_right_revo2_description.xacro` |
-| Piper X | `piper_x/` | `piper_x_description.urdf` | `piper_x_with_gripper_description.xacro` | `piper_x_with_left_revo2_description.xacro` / `piper_x_with_right_revo2_description.xacro` |
-| Nero | `nero/` | `nero_description.urdf` | `nero_with_gripper_description.xacro` | `nero_with_left_revo2_description.xacro` / `nero_with_right_revo2_description.xacro` |
-| Revo2 Hand | `revo2/` | `revo2_left_hand.urdf` / `revo2_right_hand.urdf` | — | — |
+When syncing official Nero updates, use a `sync/<topic>` branch first and merge the reviewed result into `main`.
 
----
+## Layout
 
-## Directory Structure
-
-```
-agx_arm_urdf/
-├── piper/
-│   ├── meshes/dae/    # 3D mesh files (.dae)
-│   └── urdf/          # URDF / Xacro files
-├── piper_h/
-│   ├── meshes/dae/
-│   └── urdf/
-├── piper_l/
-│   ├── meshes/dae/
-│   └── urdf/
-├── piper_x/
-│   ├── meshes/dae/
-│   └── urdf/
+```text
+.
 ├── nero/
-│   ├── meshes/dae/
+│   ├── config/
+│   ├── launch/
+│   ├── meshes/
+│   ├── rviz/
+│   ├── srdf/
 │   └── urdf/
-└── revo2/
-    ├── meshes/dae/
-    └── urdf/
+├── CMakeLists.txt
+├── package.xml
+└── README.md
 ```
 
----
+Planned custom content should use these meanings:
+
+- `nero/`: official Nero baseline
+- `custom_end_effectors/`: custom tools, flanges, cameras, and grippers
+- `robot_variants/`: composed robot entry points
+- `config/` and `launch/`: custom control and launch configuration
 
 ## Usage
 
-This repository is typically not cloned separately. Use the [agx_arm_ros](https://github.com/agilexrobotics/agx_arm_ros) main repository instead:
+Build in a ROS 2 workspace:
 
 ```bash
-git clone -b ros2 --recurse-submodules https://github.com/agilexrobotics/agx_arm_ros.git
+colcon build --packages-select agx_arm_description --symlink-install
+source install/setup.bash
 ```
 
-To visualize the model in ROS2:
+Display the Nero model:
 
 ```bash
-ros2 launch agx_arm_description display.launch.py arm_type:=piper
+ros2 launch agx_arm_description display.launch.py
 ```
-
-For more details, see the [agx_arm_ros documentation](https://github.com/agilexrobotics/agx_arm_ros).
-
----
 
 ## License
 
-This project is released under the [MIT License](./LICENSE).
+This repository keeps the upstream license notice. See [LICENSE](./LICENSE).

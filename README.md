@@ -1,70 +1,56 @@
-# AgileX 机械臂 URDF 模型
+# my_robot_description
 
 [English](./README_EN.md)
 
-本仓库包含 AgileX 系列机械臂的 URDF / Xacro 模型文件及对应的 3D 网格（mesh）资源，供 ROS2 可视化、仿真和运动规划使用。
+本仓库是 `chenzixin-zn/my_robot_description`，用于维护当前工作区使用的机器人描述文件。ROS 2 包名仍为 `agx_arm_description`，以保持已有 launch、URDF、RViz 和依赖关系兼容。
 
-> 本仓库作为 [agx_arm_ros](https://github.com/agilexrobotics/agx_arm_ros) 的子模块使用，完整的 ROS2 驱动、启动与控制说明请参阅主仓库。
+当前主干只保留 AgileX Nero 机械臂基线。Piper、Piper H、Piper L、Piper X 和 Revo2 独立手模型不再放在本仓库主干中。
 
----
+## 远端关系
 
-## 支持的型号
+- `origin`: `https://github.com/chenzixin-zn/my_robot_description.git`
+- `upstream`: `https://github.com/agilexrobotics/agx_arm_urdf.git`
 
-| 型号 | 目录 | 基础 URDF | 夹爪 Xacro | 灵巧手 Xacro |
-|------|------|-----------|------------|--------------|
-| Piper | `piper/` | `piper_description.urdf` | `piper_with_gripper_description.xacro` | `piper_with_left_revo2_description.xacro` / `piper_with_right_revo2_description.xacro` |
-| Piper H | `piper_h/` | `piper_h_description.urdf` | `piper_h_with_gripper_description.xacro` | `piper_h_with_left_revo2_description.xacro` / `piper_h_with_right_revo2_description.xacro` |
-| Piper L | `piper_l/` | `piper_l_description.urdf` | `piper_l_with_gripper_description.xacro` | `piper_l_with_left_revo2_description.xacro` / `piper_l_with_right_revo2_description.xacro` |
-| Piper X | `piper_x/` | `piper_x_description.urdf` | `piper_x_with_gripper_description.xacro` | `piper_x_with_left_revo2_description.xacro` / `piper_x_with_right_revo2_description.xacro` |
-| Nero | `nero/` | `nero_description.urdf` | `nero_with_gripper_description.xacro` | `nero_with_left_revo2_description.xacro` / `nero_with_right_revo2_description.xacro` |
-| Revo2 灵巧手 | `revo2/` | `revo2_left_hand.urdf` / `revo2_right_hand.urdf` | — | — |
-
----
+后续同步官方 Nero 更新时，建议先在 `sync/<topic>` 分支处理，再合入 `main`。
 
 ## 目录结构
 
-```
-agx_arm_urdf/
-├── piper/
-│   ├── meshes/dae/    # 3D 网格文件（.dae）
-│   └── urdf/          # URDF / Xacro 文件
-├── piper_h/
-│   ├── meshes/dae/
-│   └── urdf/
-├── piper_l/
-│   ├── meshes/dae/
-│   └── urdf/
-├── piper_x/
-│   ├── meshes/dae/
-│   └── urdf/
+```text
+.
 ├── nero/
-│   ├── meshes/dae/
+│   ├── config/
+│   ├── launch/
+│   ├── meshes/
+│   ├── rviz/
+│   ├── srdf/
 │   └── urdf/
-└── revo2/
-    ├── meshes/dae/
-    └── urdf/
+├── CMakeLists.txt
+├── package.xml
+└── README.md
 ```
 
----
+计划中的自定义内容按语义分层：
+
+- `nero/`: 官方 Nero 基线
+- `custom_end_effectors/`: 自定义末端、法兰、相机、夹爪
+- `robot_variants/`: 不同组合入口
+- `config/`、`launch/`: 自定义控制和启动配置
 
 ## 使用方式
 
-本仓库通常不需要单独克隆，请通过 [agx_arm_ros](https://github.com/agilexrobotics/agx_arm_ros) 主仓库获取：
+在 ROS 2 工作空间中构建：
 
 ```bash
-git clone -b ros2 --recurse-submodules https://github.com/agilexrobotics/agx_arm_ros.git
+colcon build --packages-select agx_arm_description --symlink-install
+source install/setup.bash
 ```
 
-在 ROS2 中加载模型进行可视化：
+显示 Nero 模型：
 
 ```bash
-ros2 launch agx_arm_description display.launch.py arm_type:=piper
+ros2 launch agx_arm_description display.launch.py
 ```
-
-更多用法请参阅 [agx_arm_ros 文档](https://github.com/agilexrobotics/agx_arm_ros)。
-
----
 
 ## 许可证
 
-本项目基于 [MIT License](./LICENSE) 发布。
+本仓库保留上游项目的许可证声明，详见 [LICENSE](./LICENSE)。
