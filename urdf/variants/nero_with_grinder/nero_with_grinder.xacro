@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="nero_with_grinder">
+    <!--
+        nero_with_grinder.xacro
+        =======================
+        Nero arm with grinder and camera attached to flange.
+        Base: 叶片车模拟_blender.stl
+
+        Structure:
+          workbench_link (叶片车) -> world -> base_link (nero) -> link1 -> ... -> link7 -> gripper_flange -> grinder
+
+        Usage:
+        xacro nero_with_grinder.xacro
+    -->
+
+    <!-- 叶片车 workbench link -->
+    <link name="workbench_link">
+        <inertial>
+            <origin xyz="0 0 0.1" rpy="0 0 0"/>
+            <mass value="10.0"/>
+            <inertia ixx="0.5" ixy="0" ixz="0" iyy="0.5" iyz="0" izz="0.5"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_robot_description/meshes/workcells/blade_polishing/叶片车模拟_blender.STL" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="grey">
+                <color rgba="0.5 0.5 0.5 1.0"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0.1" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.5 0.5 0.2"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <!-- Import nero with gripper flange (has world, base_link, link1-7, gripper_flange) -->
+    <xacro:include filename="$(find my_robot_description)/urdf/robots/nero/nero_with_gripper_flange_description.xacro"/>
+
+    <!-- Joint from workbench_link to world -->
+    <joint name="workbench_to_world_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <parent link="workbench_link"/>
+        <child link="world"/>
+    </joint>
+
+    <!-- Import grinder with camera -->
+    <xacro:include filename="$(find my_robot_description)/urdf/end_effectors/grinder/grinder_with_camera.xacro"/>
+
+    <!-- Attach grinder to flange -->
+    <xacro:grinder_with_camera parent="gripper_flange"/>
+</robot>

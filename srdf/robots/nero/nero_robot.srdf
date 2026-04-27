@@ -1,0 +1,20 @@
+<?xml version="1.0">
+<robot name="nero_robot">
+    <group name="manipulator">
+        <chain base_link="base_link" tip_link="end_effector"/>
+    </group>
+
+    <end_effector name="end_effector" parent_link="link7" group="manipulator"/>
+    <disable_collisions link1="base_link" link2="link1" reason="Adjacent"/>
+    <disable_collisions link1="link1" link2="link2"/>
+    <disable_collisions link1="link2" link2="link3"/>
+    <disable_collisions link1="link3" link2="link4"/>
+    <disable_collisions link1="link4" link2="link5"/>
+    <disable_collisions link1="link5" link2="link6"/>
+    <disable_collisions link1="link6" link2="link7"/>
+    <disable_collisions link1="link7" link2="end_effector" reason="Adjacent"/>
+
+    <disable_collisions link1="link6" link2="end_effector" reason="End Effector"/>
+    <disable_collisions link1="link5" link2="end_effector" reason="End Effector"/>
+    
+</robot>

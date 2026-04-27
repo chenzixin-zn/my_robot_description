@@ -1,0 +1,45 @@
+# Hand-eye calibration result for Nero arm + Orbbec Gemini 335
+# camera_mount_to_camera: transform from gripper_flange to grinder_camera_optical_frame
+# target_mount_to_target: transform from workbench_link to cal_target_frame
+#
+# Replace these identity values with your actual calibration results.
+# Run the calibration launch to obtain real values.
+
+camera_mount_to_camera:
+  x: 0.105
+  y: 0.0
+  z: 0.04
+  qx: -0.5
+  qy: 0.5
+  qz: -0.5
+  qw: 0.5
+
+target_mount_to_target:
+  x: 0.45
+  y: 0.0
+  z: 0.15
+  qx: 0.0
+  qy: 0.0
+  qz: 0.0
+  qw: 1.0
+
+# Additional camera transforms (for multi-camera setup)
+# Camera 2: Left view camera (mounted on workbench)
+camera2_mount_to_camera:
+  x: 0.0        # TODO: Calibrate this
+  y: 0.0        # TODO: Calibrate this
+  z: 0.0        # TODO: Calibrate this
+  qx: 0.0       # TODO: Calibrate this
+  qy: 0.0       # TODO: Calibrate this
+  qz: 0.0       # TODO: Calibrate this
+  qw: 1.0       # TODO: Calibrate this
+
+# Camera 3: Right view camera (mounted on workbench)
+camera3_mount_to_camera:
+  x: 0.0        # TODO: Calibrate this
+  y: 0.0        # TODO: Calibrate this
+  z: 0.0        # TODO: Calibrate this
+  qx: 0.0       # TODO: Calibrate this
+  qy: 0.0       # TODO: Calibrate this
+  qz: 0.0       # TODO: Calibrate this
+  qw: 1.0       # TODO: Calibrate this
