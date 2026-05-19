@@ -1,69 +1,50 @@
 # my_robot_description
 
-[English](./README_EN.md)
+`my_robot_description` 是当前工作空间维护的机器人描述包，负责 Nero 机械臂、末端执行器、相机安装、工位和组合机器人模型。
 
-本仓库是 `chenzixin-zn/my_robot_description`，用于维护当前工作区使用的机器人、末端工具和工位描述文件。ROS 2 包名为 `my_robot_description`。
+## 包职责
 
-当前主干以 AgileX Nero 机械臂为官方基线，并在独立目录中维护本项目的 grinder、camera、workbench 和组合入口。
+- 维护 Nero 机器人 URDF / xacro / mesh。
+- 维护 grinder、camera、TCP 相关末端描述。
+- 维护 blade polishing 工位描述。
+- 提供组合入口 `nero_with_grinder`。
+- 提供 Tesseract / MoveIt 使用的 SRDF 和插件配置。
 
-## 远端关系
+本包只描述几何、语义和静态配置，不实现 ROI、三维重建、BT 流程、刀路规划或轨迹执行逻辑。
 
-- `origin`: `https://github.com/chenzixin-zn/my_robot_description.git`
-- `upstream`: `https://github.com/agilexrobotics/agx_arm_urdf.git`
-
-后续同步官方 Nero 更新时，建议先在 `sync/<topic>` 分支处理，只更新 `vendor/agx_arm_urdf/nero/`，再检查标准对外目录和组合入口是否需要跟随调整。
-
-## 目录结构
+## 主要入口
 
 ```text
-.
-├── vendor/agx_arm_urdf/nero/          # 官方 Nero 基线，用于 upstream 同步
-├── urdf/
-│   ├── robots/nero/
-│   ├── end_effectors/grinder/
-│   ├── workcells/blade_polishing/
-│   └── variants/nero_with_grinder/
-├── meshes/
-│   ├── robots/nero/
-│   ├── end_effectors/grinder/
-│   └── workcells/blade_polishing/
-├── srdf/
-│   ├── robots/nero/
-│   └── variants/nero_with_grinder/
-├── config/
-│   ├── robots/nero/
-│   ├── workcells/blade_polishing/
-│   └── variants/nero_with_grinder/
-├── launch/
-├── rviz/
-├── CMakeLists.txt
-├── package.xml
-└── README.md
+urdf/robots/nero/
+urdf/end_effectors/grinder/
+urdf/workcells/blade_polishing/
+urdf/variants/nero_with_grinder/
+srdf/variants/nero_with_grinder/
+config/variants/nero_with_grinder/
+launch/display.launch.py
 ```
 
-目录语义：
-
-- `vendor/agx_arm_urdf/nero/`: 官方基线，尽量保持原样
-- `urdf/robots/nero/`: 对外使用的 Nero 描述入口
-- `urdf/end_effectors/`: 自定义末端、法兰、相机、夹爪
-- `urdf/workcells/`: 工位、工装、静态标定相关描述
-- `urdf/variants/`: 机器人与末端、工位组合后的入口
-
-## 使用方式
-
-在 ROS 2 工作空间中构建：
+## 构建
 
 ```bash
 colcon build --packages-select my_robot_description --symlink-install
 source install/setup.bash
 ```
 
-显示 Nero 模型：
+## 显示模型
 
 ```bash
 ros2 launch my_robot_description display.launch.py
 ```
 
-## 许可证
+## 关键维护边界
 
-本仓库保留上游项目的许可证声明，详见 [LICENSE](./LICENSE)。
+- `vendor/agx_arm_urdf/nero/` 保留上游 AgileX Nero 基线，尽量不做项目定制。
+- 项目定制内容放在 `urdf/`、`meshes/`、`srdf/`、`config/` 的标准目录中。
+- 最终相机外参、TCP、collision 和 ready pose 必须来自实机或硬件确认，不得写入猜测值。
+- 包内 README 只记录包级职责、入口和维护边界；系统总架构写在 root `docs/Architecture.md`。
+
+## 远端
+
+- `origin`: `https://github.com/chenzixin-zn/my_robot_description.git`
+- `upstream`: `https://github.com/agilexrobotics/agx_arm_urdf.git`
