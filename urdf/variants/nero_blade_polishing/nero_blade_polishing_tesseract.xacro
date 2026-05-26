@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"
+       xmlns:tesseract="https://github.com/tesseract-robotics/tesseract"
+       name="nero_blade_polishing"
+       tesseract:make_convex="true">
+    <xacro:include filename="$(find my_robot_description)/urdf/variants/nero_blade_polishing/nero_blade_polishing.xacro"/>
+</robot>

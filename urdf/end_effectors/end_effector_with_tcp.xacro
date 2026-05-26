@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="end_effector_with_tcp">
+    <xacro:macro name="end_effector_with_tcp" params="parent">
+        <link name="end_effector_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://my_robot_description/meshes/end_effectors/end_effector.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://my_robot_description/meshes/end_effectors/end_effector.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+            </collision>
+        </link>
+
+        <joint name="gripper_flange_to_end_effector_joint" type="fixed">
+            <origin xyz="0 0 0.01" rpy="0 3.1415926535897 -1.5707963268"/>
+            <parent link="${parent}"/>
+            <child link="end_effector_link"/>
+        </joint>
+
+        <link name="polishing_tcp"/>
+
+        <joint name="end_effector_to_polishing_tcp_joint" type="fixed">
+            <origin xyz="0 -0.05085 -0.20074" rpy="0 0 3.14159265358979"/>
+            <parent link="end_effector_link"/>
+            <child link="polishing_tcp"/>
+        </joint>
+    </xacro:macro>
+</robot>

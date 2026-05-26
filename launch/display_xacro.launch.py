@@ -10,7 +10,7 @@ from launch_ros.parameter_descriptions import ParameterValue
 
 def generate_launch_description():
     package_path = get_package_share_path('my_robot_description')
-    default_model_path = package_path / 'urdf/robots/nero/nero_with_gripper_flange_description.xacro'
+    default_model_path = package_path / 'urdf/variants/nero_blade_polishing/nero_blade_polishing.xacro'
     default_rviz_config_path = package_path / 'rviz/robots/nero/piper_no_gripper.rviz'
 
     gui_arg = DeclareLaunchArgument(name='gui', default_value='true', choices=['true', 'false'],

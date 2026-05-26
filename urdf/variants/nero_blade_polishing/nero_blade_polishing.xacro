@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="nero_blade_polishing">
+    <link name="workbench_link">
+        <inertial>
+            <origin xyz="0 0 0.1" rpy="0 0 0"/>
+            <mass value="10.0"/>
+            <inertia ixx="0.5" ixy="0" ixz="0" iyy="0.5" iyz="0" izz="0.5"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_robot_description/meshes/workcells/blade_polishing/base_blender.STL"/>
+            </geometry>
+            <material name="grey">
+                <color rgba="0.5 0.5 0.5 1.0"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0.1" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_robot_description/meshes/workcells/blade_polishing/base_blender.STL"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <xacro:include filename="$(find my_robot_description)/urdf/robots/nero/nero_with_gripper_flange_description.xacro"/>
+
+    <joint name="workbench_to_world_joint" type="fixed">
+        <origin xyz="-0.00829 0.1448 0.09202" rpy="0 0 -1.571"/>
+        <parent link="workbench_link"/>
+        <child link="world"/>
+    </joint>
+
+    <xacro:include filename="$(find my_robot_description)/vendor/orbbec_description/urdf/gemini335L_336L.urdf.xacro"/>
+    <xacro:include filename="$(find my_robot_description)/urdf/sensors/link5_gemini335l_mount.xacro"/>
+    <xacro:include filename="$(find my_robot_description)/urdf/end_effectors/end_effector_with_tcp.xacro"/>
+
+    <xacro:link5_gemini335_mount parent="link5"/>
+    <xacro:end_effector_with_tcp parent="gripper_flange"/>
+</robot>

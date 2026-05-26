@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="link5_gemini335_mount">
+    <xacro:macro name="link5_gemini335_mount" params="parent">
+        <link name="link5_camera_holder_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://my_robot_description/meshes/sensors/link5_gemini335_mount/link5_camera_holder_link.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://my_robot_description/meshes/sensors/link5_gemini335_mount/link5_camera_holder_link.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+            </collision>
+        </link>
+
+        <joint name="link5_camera_holder_joint" type="fixed">
+            <origin xyz="0 -0.02978 -0.05838" rpy="0 0 0"/>
+            <parent link="${parent}"/>
+            <child link="link5_camera_holder_link"/>
+        </joint>
+
+        <joint name="link5_camera_holder_to_camera_link_joint" type="fixed">
+            <origin xyz="0.0475 -0.04854531 0.00286427" rpy="0 -0.0812203194 -1.5707963268"/>
+            <parent link="link5_camera_holder_link"/>
+            <child link="camera_link"/>
+        </joint>
+
+        <link name="camera_depth_optical_frame"/>
+
+        <joint name="camera_depth_to_depth_optical_joint" type="fixed">
+            <origin xyz="0 0 0" rpy="-1.5708 0 -1.5708"/>
+            <parent link="camera_depth_frame"/>
+            <child link="camera_depth_optical_frame"/>
+        </joint>
+    </xacro:macro>
+</robot>

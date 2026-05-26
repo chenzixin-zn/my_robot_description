@@ -3,7 +3,7 @@ project(my_robot_description)
 
 find_package(ament_cmake REQUIRED)
 
-foreach(dir urdf meshes srdf config launch rviz)
+foreach(dir urdf meshes srdf config launch rviz vendor)
   if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${dir}")
     install(DIRECTORY "${dir}"
       DESTINATION share/${PROJECT_NAME}

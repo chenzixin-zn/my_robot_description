@@ -10,7 +10,7 @@ def generate_launch_description():
 
     package_name = "my_robot_description"
     package_path = get_package_share_directory(package_name)
-    urdf_path = os.path.join(package_path, "urdf", "robots", "nero", "nero_description.urdf")
+    urdf_path = os.path.join(package_path, "urdf", "variants", "nero_blade_polishing", "nero_blade_polishing.urdf")
     rviz_config_path = os.path.join(package_path, "rviz", "robots", "nero", "piper_no_gripper.rviz")
     joint_config_path = os.path.join(package_path, "config", "robots", "nero", "joint_names_nero_description.yaml")
 
