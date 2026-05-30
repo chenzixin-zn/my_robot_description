@@ -49,5 +49,5 @@ ros2 launch my_robot_description display.launch.py
 
 ## 远端
 
-- `origin`: `https://github.com/chenzixin-zn/my_robot_description.git`
+- `origin`: `git@github.com:chenzixin-zn/my_robot_description.git`
 - `upstream`: `https://github.com/agilexrobotics/agx_arm_urdf.git`
