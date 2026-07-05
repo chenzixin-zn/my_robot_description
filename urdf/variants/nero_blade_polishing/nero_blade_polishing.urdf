@@ -587,7 +587,7 @@
   </joint>
   <link name="polishing_tcp"/>
   <joint name="end_effector_to_polishing_tcp_joint" type="fixed">
-    <origin rpy="3.14159265358979 0 3.14159265358979" xyz="0 -0.05085 -0.20074"/>
+    <origin rpy="3.14159265358979 0 3.14159265358979" xyz="0 -0.05085 -0.19574"/>
     <parent link="end_effector_link"/>
     <child link="polishing_tcp"/>
   </joint>
